@@ -8,7 +8,7 @@ FROM actor;
 -- 1b. Display the first and last name of each actor in a single column in upper case letters. Name the column Actor Name.
 
 SELECT 
-	CONCAT(first_name, " ", last_name) AS Actor_Name
+	UPPER(CONCAT(first_name, " ", last_name)) AS Actor_Name
 FROM actor;
 
 -- 2a. You need to find the ID number, first name, and last name of an actor, of whom you know only the first name, "Joe." What is one query would you use to obtain this information?
@@ -57,7 +57,6 @@ SELECT
 	last_name, 
 	Count(*) as 'Last Name Count'
 FROM actor
-WHERE last_name = last_name
 GROUP BY last_name
 HAVING Count(*) >= 2;
 
@@ -114,7 +113,7 @@ GROUP BY title;
 
 -- 6d. How many copies of the film Hunchback Impossible exist in the inventory system?
 
-Select
+SELECT
 	COUNT(inventory.film_id) AS "Copies of Hunchback Impossible"
 FROM inventory
 	INNER JOIN film
@@ -203,7 +202,7 @@ WHERE
 
 SELECT
 	title,
-    count(rental.rental_id) AS "Amount Rented"
+   COUNT(rental.rental_id) AS "Amount Rented"
 FROM film
 	INNER JOIN inventory
     ON film.film_id = inventory.film_id
@@ -253,7 +252,7 @@ FROM category
     INNER JOIN payment
     ON rental.rental_id = payment.rental_id
 GROUP BY category.name
-ORDER BY sum(payment.amount) DESC limit 5;
+ORDER BY sum(payment.amount) DESC LIMIT 5;
 
 -- 8a. In your new role as an executive, you would like to have an easy way of viewing the Top five genres by gross revenue. 
 -- Use the solution from the problem above to create a view. If you haven't solved 7h, you can substitute another query to create a view.
