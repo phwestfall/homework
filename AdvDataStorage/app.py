@@ -33,18 +33,19 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return(
-            f'Welcome to the Home Page!</br></br>'
-            f'-------------------------</br></br>'
+            f'<em>Welcome to the Home Page!</em></br></br>'
+            f'----------------------------------</br></br>'
             f'<b>All of the available routes:</b></br></br>'
-            f'Last Twelve Months of Precipitation Data: /api/v1.0/precipitation</br></br>'
-            f'List of Weather Stations: /api/v1.0/stations</br></br>'
-            f'Dates and Temps Observations: /api/v1.0/tobs</br></br>'
-            f'Temperature minimun, average, and maximum from start date </br>'
-            f'format should be in yyyy-mm-dd format: /api/v1.0/yyyy-mm-dd</br></br>'
-            f'Temperature minimum, average, and maximum for a start and end date</br>'
-            f'format should be in yyyy-mm-dd format: /api/v1.0/yyyy-mm-dd/yyyy-mm-dd'            
+            f'Last Twelve Months of Precipitation Data: <a href="/api/v1.0/precipitation">Precipitation</a></br></br>'
+            f'List of Weather Stations: <a href="/api/v1.0/stations">Stations</a></br></br>'
+            f'Dates and Temps Observations: <a href="/api/v1.0/tobs">Temperatures</a></br></br>'
+            f'Temperature minimun, average, and maximum from an inputted start date </br>'
+            f'The format is in yyyy-mm-dd format: /api/v1.0/yyyy-mm-dd</br></br>'
+            f'Temperature minimum, average, and maximum for an inputted start and end date</br>'
+            f'The format is in yyyy-mm-dd format: /api/v1.0/yyyy-mm-dd/yyyy-mm-dd'            
             )
-    
+
+# Set up endpoint to display precipitation and date in a dictionary    
 @app.route('/api/v1.0/precipitation')
 def precip():
     session = Session(engine)
@@ -62,6 +63,7 @@ def precip():
     date_precip_dict = dict(date_precip)
     return jsonify(date_precip_dict)
 
+# set up endpoint to display 
 @app.route('/api/v1.0/stations')
 def station():
     session = Session(engine)
@@ -69,6 +71,7 @@ def station():
     station_list = list(np.ravel(station_name))
     return jsonify(station_list)
 
+# set up endpoint to show dates and temperature observations from a year from the last data point
 @app.route('/api/v1.0/tobs')
 def temperatures():
     session = Session(engine)
@@ -90,7 +93,9 @@ def temperatures():
     temp_list = list(np.ravel(year_temp))
     
     return jsonify(temp_list) 
-    
+
+# set up endpoint to JSON list of the minimum temperature, the average temperature, and the max temperature
+# with just the start date input    
 @app.route('/api/v1.0/<start>')
 def calcstarttemp(start=None):
     session = Session(engine)
@@ -99,6 +104,8 @@ def calcstarttemp(start=None):
     starttemp_list = list(starttemp)
     return jsonify(starttemp_list)
 
+# set up endpoint to JSON list of the minimum temperature, the average temperature, and the max temperature
+# with  start date and end date input  
 @app.route('/api/v1.0/<start>/<end>')
 def calctemp(start=None, end=None):
     session = Session(engine)
@@ -107,7 +114,6 @@ def calctemp(start=None, end=None):
                              filter(Measurement.date <= end).group_by(Measurement.date).all()
     startendtemp_list = list(startendtemp)
     return jsonify(startendtemp_list)
-
 
 from flask import request
 
