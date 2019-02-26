@@ -53,7 +53,7 @@ def scrape():
     featured_image_url = featured_image_url[1:-1]
     
     # website base url
-    base_url = 'http:/www.jpl.nasa.gov'
+    base_url = 'http://www.jpl.nasa.gov'
     
     # concatenate base url with feature image url
     featured_image_url = base_url + featured_image_url

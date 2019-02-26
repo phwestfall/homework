@@ -23,7 +23,7 @@
         <br>
         <h3 class="heading">Featured Mars Image</h3>
         <a href="{{ mars_all.featured_image_url }}">
-          <img class="figured_img" src="{{ mars_all.featured_img_url }} width=880px">
+          <img class="figured_img" src="{{ mars_all.featured_image_url }}" width=800px>
         </a>
       </div>
       <br>
@@ -36,7 +36,7 @@
           </div>          
         </div><br><br><br><br><br><br>
         <h3 class="heading">Mars Facts</h3>
-        {{ mars_all.mars_facts }}
+        {{ mars_all.mars_facts | safe }}
       </div>
     </div>
     <br>
@@ -50,13 +50,14 @@
                   <div class="card text-white bg-dark" style="margin: 30px;">
                       <img class="card-img-top" src="{{ item.img_url }}" />
                       <div class="card-body">
-                          <p class="card-text">{{ item.title }}</p>
+                          <h3 class="card-title">{{ item.title }}</h>
                       </div>
                   </div>
               </div>
               {% endfor %}
           </div>
       </div>
+      
   </div><!-- Close main container -->
 
   <!-- Bootstrap JS -->
